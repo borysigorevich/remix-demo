@@ -23,6 +23,7 @@ import {queryClient} from './client';
 export const useQueryProfile = createQuery<apiProfileGetResponse, apiProfileGetPayload>({
   queryKey: ['profile'],
   fetcher: params => apiProfileGet(params),
+  staleTime: Infinity,
 });
 
 //

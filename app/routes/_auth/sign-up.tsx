@@ -62,14 +62,12 @@ export default function SignUp() {
 
     if (response?.errors?.length) {
       enqueueSnackbar({
-        heading: response?.meta?.message,
-        messages: response?.errors,
+        message: response?.errors,
         variant: 'error',
       });
     } else if (response?.result?.accessToken?.token) {
       enqueueSnackbar({
-        heading: 'Account created successfully',
-        messages: `Welcome aboard, ${response.result.user?.name}`,
+        message: `Welcome aboard, ${response.result.user?.name}`,
         variant: 'success',
       });
       apiSaveTokens(response);

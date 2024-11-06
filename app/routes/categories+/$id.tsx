@@ -1,27 +1,19 @@
+import {yupResolver} from '@hookform/resolvers/yup';
 import type {MetaFunction} from '@remix-run/node';
 import {ClientLoaderFunctionArgs, Form, redirect, useLoaderData} from '@remix-run/react';
-import {useForm, FormProvider} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {useMutation} from '@tanstack/react-query';
-import {useTranslation} from 'react-i18next';
 import {useSnackbar} from 'notistack';
+import {FormProvider, useForm} from 'react-hook-form';
+import {useTranslation} from 'react-i18next';
 import * as yup from 'yup';
 
-import {Box} from '@mui/material';
-
-import {queryClient} from '~/services/client';
 import {useMutationCategoriesUpdate, useQueryCategoriesGet} from '~/services/categories';
+import {queryClient} from '~/services/client';
 
 import {useI18nNavigate} from '~/global/hooks/use-i18n-navigate';
 
-import {AppInputSwitch} from '~/global/components/app-input-switch';
 import {PageShell} from '~/global/components/page-shell';
-import {AppInput} from '~/global/components/app-input';
 
 import {CategoriesForm} from './components/form';
-
-//
-//
 
 export const handle = {i18n: ['common', 'categories']};
 export const meta: MetaFunction = () => [{title: 'Remix App - Edit a category'}];
@@ -41,8 +33,6 @@ export const clientLoader = async ({params}: ClientLoaderFunctionArgs & {params:
 
   return result.result!;
 };
-
-//
 
 const schema = yup
   .object({
@@ -70,27 +60,21 @@ export default function CategoriesCreate() {
     resolver: yupResolver(schema),
   });
 
-  //
-
   const onSubmit = form.handleSubmit(async payload => {
     const response = await mutate.mutateAsync({id: current.categoryId, payload});
 
     if (response?.errors?.length) {
       enqueueSnackbar({
-        heading: response?.meta?.message,
-        messages: response?.errors,
+        message: response?.errors,
         variant: 'error',
       });
     } else if (response?.result?.categoryId) {
-      enqueueSnackbar({messages: response.meta?.message, variant: 'success'});
+      enqueueSnackbar({message: response.meta?.message, variant: 'success'});
       navigate('/categories', {viewTransition: true});
     }
   });
 
   const isLoading = mutate.isPending || !!mutate.data?.result;
-
-  //
-  //
 
   return (
     <FormProvider {...form}>

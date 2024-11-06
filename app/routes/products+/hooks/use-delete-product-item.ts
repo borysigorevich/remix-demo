@@ -1,4 +1,3 @@
-import {useQueryClient} from '@tanstack/react-query';
 import {useSnackbar} from 'notistack';
 import {useTranslation} from 'react-i18next';
 
@@ -10,7 +9,6 @@ export const useDeleteProductItem = () => {
   const {t} = useTranslation(['common']);
 
   const {enqueueSnackbar} = useSnackbar();
-  const queryClient = useQueryClient();
 
   const deleteItem = useMutationProductsDelete();
 
@@ -23,9 +21,6 @@ export const useDeleteProductItem = () => {
         onSuccess: async result => {
           result?.meta?.message &&
             enqueueSnackbar({message: result?.meta?.message, variant: 'success'});
-          queryClient.invalidateQueries({
-            queryKey: ['products'],
-          });
         },
         onError: err => {
           enqueueSnackbar({message: err?.message || 'unknown error', variant: 'error'});

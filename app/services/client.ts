@@ -1,8 +1,7 @@
 import {remember} from '@epic-web/remember';
 import {QueryClient} from '@tanstack/react-query';
 
-//
-//
+export const STALE_TIME = 5 * 60 * 1000; // 5 minutes
 
 export const queryClient = remember(
   'react-query',
@@ -10,8 +9,6 @@ export const queryClient = remember(
     new QueryClient({
       defaultOptions: {
         queries: {
-          // staleTime: 300_000, // 5 minutes
-          staleTime: 5 * 60 * 1000,
           retry: 0,
         },
       },

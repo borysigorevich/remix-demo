@@ -18,10 +18,7 @@ import {
   apiProductsUpdateResponse,
 } from '~/api-client/products';
 
-import {queryClient} from './client';
-
-//
-//
+import {queryClient, STALE_TIME} from './client';
 
 const key = 'products';
 const refetchListNoCache = async () =>
@@ -38,6 +35,7 @@ export const useQueryProductsList = createQuery<
 >({
   queryKey: [key],
   fetcher: params => apiProductsList(params),
+  staleTime: STALE_TIME,
 });
 
 //

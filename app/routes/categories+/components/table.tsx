@@ -13,15 +13,10 @@ import {CategoriesTableRow} from './table-row';
 import {CategoriesTableRowSkeleton} from './table-row-skeleton';
 import {CategoriesTableHead} from './table-head';
 
-//
-//
-
 export const CategoriesTable = ({data, isLoading}: {data?: ApiCategory[]; isLoading: boolean}) => {
   const {t} = useTranslation();
   const {enqueueSnackbar} = useSnackbar();
   const deleteItem = useMutationCategoriesDelete();
-
-  //
 
   const doDeleteItem = (item: ApiCategory) => {
     if (!window.confirm(t('common:deleteConfirm', {item: item.title.en || item.title.ar}))) return;
@@ -38,9 +33,6 @@ export const CategoriesTable = ({data, isLoading}: {data?: ApiCategory[]; isLoad
       },
     );
   };
-
-  //
-  //
 
   return (
     <TableContainer component={Paper}>

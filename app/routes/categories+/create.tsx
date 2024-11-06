@@ -1,7 +1,6 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import type {MetaFunction} from '@remix-run/node';
 import {Form, redirect} from '@remix-run/react';
-import {useQueryClient} from '@tanstack/react-query';
 import {useSnackbar} from 'notistack';
 import {FormProvider, useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
@@ -44,15 +43,12 @@ export default function CategoriesCreate() {
   const {enqueueSnackbar} = useSnackbar();
   const mutate = useMutationCategoriesCreate();
   const navigate = useI18nNavigate();
-  const queryClient = useQueryClient();
 
   const form = useForm({
     mode: 'onChange',
     defaultValues: {title: {en: '', ar: ''}, isActive: false},
     resolver: yupResolver(schema),
   });
-
-  //
 
   const onSubmit = form.handleSubmit(async payload => {
     const response = await mutate.mutateAsync({payload});
@@ -64,9 +60,6 @@ export default function CategoriesCreate() {
       });
     } else if (response?.result?.categoryId) {
       enqueueSnackbar({message: response.meta?.message, variant: 'success'});
-      await queryClient.invalidateQueries({
-        queryKey: ['categoriesCreate'],
-      });
       navigate('/categories', {viewTransition: true});
     }
   });

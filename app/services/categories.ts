@@ -18,7 +18,7 @@ import {
   apiCategoriesUpdateResponse,
 } from '~/api-client/categories';
 
-import {queryClient} from './client';
+import {queryClient, STALE_TIME} from './client';
 
 //
 //
@@ -38,6 +38,7 @@ export const useQueryCategoriesList = createQuery<
 >({
   queryKey: [key],
   fetcher: params => apiCategoriesList(params),
+  staleTime: STALE_TIME,
 });
 
 //
