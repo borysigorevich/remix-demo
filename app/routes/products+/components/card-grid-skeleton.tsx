@@ -10,6 +10,7 @@ export const CardGridSkeleton = ({count = 3}: CardGridSkeletonProps) => {
   for (let index = 0; index < count; index++) {
     cards.push(
       <Skeleton
+        key={index}
         sx={{
           height: '329.3px',
           transform: 'none',

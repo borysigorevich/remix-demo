@@ -1,21 +1,20 @@
-import type {MetaFunction} from '@remix-run/node';
-import {Form, redirect, useNavigate} from '@remix-run/react';
-import {useTranslation} from 'react-i18next';
-import {useSnackbar} from 'notistack';
-import * as yup from 'yup';
-import {useForm, FormProvider} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
+import type {MetaFunction} from '@remix-run/node';
+import {Form, redirect} from '@remix-run/react';
+import {useSnackbar} from 'notistack';
+import {FormProvider, useForm} from 'react-hook-form';
+import {useTranslation} from 'react-i18next';
+import * as yup from 'yup';
 
 import {useMutationSignIn} from '~/services/auth';
 
-import {PageShell} from '~/global/components/page-shell';
-import {AppInputPassword} from '~/global/components/app-input-password';
+import {useI18nNavigate} from '~/global/hooks/use-i18n-navigate';
+
 import {AppInput} from '~/global/components/app-input';
+import {AppInputPassword} from '~/global/components/app-input-password';
+import {PageShell} from '~/global/components/page-shell';
 
 import {apiSaveTokens} from '~/api-client/utils/tokens';
-
-//
-//
 
 export const handle = {i18n: ['common', 'auth']};
 export const meta: MetaFunction = () => [{title: 'Remix App - Sign In'}];
@@ -33,14 +32,11 @@ const schema = yup
   })
   .required();
 
-//
-//
-
 export default function SignIn() {
   const {t} = useTranslation(handle.i18n);
   const {enqueueSnackbar} = useSnackbar();
   const mutate = useMutationSignIn();
-  const navigate = useNavigate();
+  const navigate = useI18nNavigate();
 
   const form = useForm({
     mode: 'onChange',
