@@ -57,26 +57,20 @@ export default function Profile() {
     resolver: yupResolver(schema),
   });
 
-  //
-
   const onSubmit = form.handleSubmit(async payload => {
     const response = await mutate.mutateAsync({payload});
 
     if (response?.errors?.length) {
       enqueueSnackbar({
-        heading: response?.meta?.message,
-        messages: response?.errors,
+        message: response?.errors,
         variant: 'error',
       });
     } else if (response?.result?.userId) {
-      enqueueSnackbar({messages: 'Profile updated successfully', variant: 'success'});
+      enqueueSnackbar({message: 'Profile updated successfully', variant: 'success'});
     }
   });
 
   const isLoading = mutate.isPending;
-
-  //
-  //
 
   return (
     <FormProvider {...form}>

@@ -44,21 +44,17 @@ export default function SignIn() {
     resolver: yupResolver(schema),
   });
 
-  //
-
   const onSubmit = form.handleSubmit(async payload => {
     const response = await mutate.mutateAsync({payload});
 
     if (response?.errors?.length) {
       enqueueSnackbar({
-        heading: response?.meta?.message,
-        messages: response?.errors,
+        message: response?.errors,
         variant: 'error',
       });
     } else if (response?.result?.accessToken?.token) {
       enqueueSnackbar({
-        heading: 'Signed in successfully',
-        messages: `Welcome back, ${response.result.user?.name}`,
+        message: `Welcome back, ${response.result.user?.name}`,
         variant: 'success',
       });
       apiSaveTokens(response);
@@ -67,9 +63,6 @@ export default function SignIn() {
   });
 
   const isLoading = mutate.isPending || !!mutate.data?.result;
-
-  //
-  //
 
   return (
     <FormProvider {...form}>

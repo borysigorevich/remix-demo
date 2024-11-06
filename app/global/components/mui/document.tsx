@@ -15,9 +15,6 @@ import theme from '~/global/components/mui/theme';
 import {EmotionStyleContext} from '~/emotion/style-context';
 import {clientLoader as RootClientLoader} from '~/root';
 
-//
-//
-
 interface DocumentProps {
   children: React.ReactNode;
   title?: string;
@@ -84,6 +81,7 @@ export const MuiDocument = withEmotionCache(({children, title}: DocumentProps, e
           }}
           anchorOrigin={{vertical: 'top', horizontal: locale?.dir === 'rtl' ? 'right' : 'left'}}
           action={key => <Button onClick={() => closeSnackbar(key)}>Dismiss</Button>}
+          autoHideDuration={5000}
         >
           <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
         </SnackbarProvider>

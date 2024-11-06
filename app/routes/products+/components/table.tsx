@@ -1,46 +1,16 @@
-import {useTranslation} from 'react-i18next';
-import {useSnackbar} from 'notistack';
-
 import {Paper, Table, TableBody, TableContainer} from '@mui/material';
-
-import {useMutationProductsDelete} from '~/services/products';
 
 import {TableRowEmpty} from '~/global/components/table-row-empty';
 
 import {ApiProduct} from '~/api-client/types';
+import {useDeleteProductItem} from '~/routes/products+/hooks/use-delete-product-item';
 
 import {ProductsTableHead} from './table-head';
 import {ProductsTableRow} from './table-row';
 import {ProductsTableRowSkeleton} from './table-row-skeleton';
 
-//
-//
-
 export const ProductsTable = ({data, isLoading}: {data?: ApiProduct[]; isLoading: boolean}) => {
-  const {t} = useTranslation(['common']);
-  const {enqueueSnackbar} = useSnackbar();
-  const deleteItem = useMutationProductsDelete();
-
-  //
-
-  const doDeleteItem = (item: ApiProduct) => {
-    if (!window.confirm(t('common:deleteConfirm', {item: item.title.en || item.title.ar}))) return;
-
-    deleteItem.mutate(
-      {id: item.productId},
-      {
-        onSuccess: async result => {
-          result?.meta?.message && enqueueSnackbar(result?.meta?.message, {variant: 'success'});
-        },
-        onError: err => {
-          enqueueSnackbar(err?.message || 'unknown error', {variant: 'error'});
-        },
-      },
-    );
-  };
-
-  //
-  //
+  const doDeleteItem = useDeleteProductItem();
 
   return (
     <TableContainer component={Paper}>

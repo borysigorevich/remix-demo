@@ -37,8 +37,6 @@ export const clientLoader = async ({params}: ClientLoaderFunctionArgs & {params:
   };
 };
 
-//
-
 const schema = yup
   .object({
     title: yup.object({
@@ -59,9 +57,6 @@ const schema = yup
   })
   .required();
 
-//
-//
-
 export default function ProductsCreate() {
   const {t} = useTranslation(handle.i18n);
   const navigate = useI18nNavigate();
@@ -75,27 +70,21 @@ export default function ProductsCreate() {
     resolver: yupResolver(schema),
   });
 
-  //
-
   const onSubmit = form.handleSubmit(async payload => {
     const response = await mutate.mutateAsync({id: item.productId, payload});
 
     if (response?.errors?.length) {
       enqueueSnackbar({
-        heading: response?.meta?.message,
-        messages: response?.errors,
+        message: response?.errors,
         variant: 'error',
       });
     } else if (response?.result?.productId) {
-      enqueueSnackbar({messages: response.meta?.message, variant: 'success'});
+      enqueueSnackbar({message: response.meta?.message, variant: 'success'});
       navigate('/products', {viewTransition: true});
     }
   });
 
   const isLoading = mutate.isPending || !!mutate.data?.result;
-
-  //
-  //
 
   return (
     <FormProvider {...form}>

@@ -14,9 +14,6 @@ import {PageShell} from '~/global/components/page-shell';
 
 import {ProductsForm} from './components/form';
 
-//
-//
-
 export const handle = {i18n: ['common', 'products']};
 export const meta: MetaFunction = () => [{title: 'Remix App - Create a category'}];
 
@@ -48,9 +45,6 @@ const schema = yup
   })
   .required();
 
-//
-//
-
 export default function ProductsCreate() {
   const navigate = useI18nNavigate();
   const {enqueueSnackbar} = useSnackbar();
@@ -73,27 +67,21 @@ export default function ProductsCreate() {
     resolver: yupResolver(schema),
   });
 
-  //
-
   const onSubmit = form.handleSubmit(async payload => {
     const response = await mutate.mutateAsync({payload});
 
     if (response?.errors?.length) {
       enqueueSnackbar({
-        heading: response?.meta?.message,
-        messages: response?.errors,
+        message: response?.errors,
         variant: 'error',
       });
     } else if (response?.result?.productId) {
-      enqueueSnackbar({messages: response.meta?.message, variant: 'success'});
+      enqueueSnackbar({message: response.meta?.message, variant: 'success'});
       navigate('/products', {viewTransition: true});
     }
   });
 
   const isLoading = mutate.isPending || !!mutate.data?.result;
-
-  //
-  //
 
   return (
     <FormProvider {...form}>

@@ -21,13 +21,14 @@ export const useDeleteProductItem = () => {
       {id: item.productId},
       {
         onSuccess: async result => {
-          result?.meta?.message && enqueueSnackbar(result?.meta?.message, {variant: 'success'});
+          result?.meta?.message &&
+            enqueueSnackbar({message: result?.meta?.message, variant: 'success'});
           queryClient.invalidateQueries({
             queryKey: ['products'],
           });
         },
         onError: err => {
-          enqueueSnackbar(err?.message || 'unknown error', {variant: 'error'});
+          enqueueSnackbar({message: err?.message || 'unknown error', variant: 'error'});
         },
       },
     );
