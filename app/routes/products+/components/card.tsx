@@ -91,7 +91,7 @@ export const ProductCard = ({product, doDeleteItem}: ProductCardProps) => {
           ) : null}
         </Stack>
 
-        <Box mt={2}>
+        <Box mt={1}>
           <Stack direction="row" alignItems="center" justifyContent="space-between">
             <Typography variant="caption" color="textDisabled">
               {t('common:createdAt')}
