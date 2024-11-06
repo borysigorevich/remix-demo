@@ -6,13 +6,13 @@ import {Stack} from '@mui/material';
 
 import {useQueryProductsList} from '~/services/products';
 
-import {SkeletonOnLoading} from '~/global/components/skeleton-on-loading';
 import {AppButton} from '~/global/components/app-button';
+import {SkeletonOnLoading} from '~/global/components/skeleton-on-loading';
+
+import {ProductsCardGrid} from '~/routes/products+/components/card-grid';
+import {ProductsViewSwitcher} from '~/routes/products+/components/view-switcher';
 
 import {ProductsTable} from './components/table';
-
-//
-//
 
 export const handle = {i18n: ['common', 'products']};
 export const meta: MetaFunction = () => [{title: 'Remix App - Products'}];
@@ -23,15 +23,9 @@ export const clientLoader = async () => {
   return null;
 };
 
-//
-//
-
 export default function Products() {
   const {t} = useTranslation(['common']);
   const {data, isLoading} = useQueryProductsList();
-
-  //
-  //
 
   return (
     <>
@@ -43,7 +37,10 @@ export default function Products() {
         </SkeletonOnLoading>
       </Stack>
 
-      <ProductsTable data={data?.result} isLoading={isLoading} />
+      <ProductsViewSwitcher
+        desktop={<ProductsTable data={data?.result} isLoading={isLoading} />}
+        mobile={<ProductsCardGrid data={data?.result} isLoading={isLoading} />}
+      />
     </>
   );
 }
