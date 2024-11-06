@@ -11,7 +11,7 @@ export const queryClient = remember(
       defaultOptions: {
         queries: {
           // staleTime: 300_000, // 5 minutes
-          staleTime: 3000,
+          staleTime: 5 * 60 * 1000,
           retry: 0,
         },
       },
