@@ -15,9 +15,6 @@ import {PageShell} from '~/global/components/page-shell';
 
 import {ProductsForm} from './components/form';
 
-//
-//
-
 export const handle = {i18n: ['common', 'products']};
 export const meta: MetaFunction = () => [{title: 'Remix App - Edit a category'}];
 
@@ -30,7 +27,7 @@ export const clientLoader = async ({params}: ClientLoaderFunctionArgs & {params:
     throw new Response('Invalid ID', {status: 404});
   }
 
-  const item = await queryClient.ensureQueryData(useQueryProductsGet.getOptions({id: params.id}));
+  const item = await queryClient.fetchQuery(useQueryProductsGet.getOptions({id: params.id}));
 
   return {
     item: item.result!,

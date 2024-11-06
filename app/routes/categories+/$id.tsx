@@ -27,9 +27,7 @@ export const clientLoader = async ({params}: ClientLoaderFunctionArgs & {params:
     throw new Response('Invalid ID', {status: 404});
   }
 
-  const result = await queryClient.ensureQueryData(
-    useQueryCategoriesGet.getOptions({id: params.id}),
-  );
+  const result = await queryClient.fetchQuery(useQueryCategoriesGet.getOptions({id: params.id}));
 
   return result.result!;
 };
@@ -43,9 +41,6 @@ const schema = yup
     isActive: yup.boolean().optional(),
   })
   .required();
-
-//
-//
 
 export default function CategoriesCreate() {
   const navigate = useI18nNavigate();
