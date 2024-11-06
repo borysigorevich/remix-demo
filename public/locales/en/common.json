@@ -19,6 +19,7 @@
 	"back": "Go Back",
 	"deleteConfirm": "Are you sure you want to delete {{item}}?",
 	"active": "Active",
+	"noResults": "No results found",
 	"lang": {
 		"en": "English",
 		"ar": "Arabic"
