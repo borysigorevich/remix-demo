@@ -1,12 +1,9 @@
 import React from 'react';
-import {SnackbarContent, CustomContentProps, closeSnackbar} from 'notistack';
+import {SnackbarContent, closeSnackbar} from 'notistack';
 
 import {AlertProps} from '@mui/material';
 
 import {Notification, NotificationProps} from './notification';
-
-//
-//
 
 declare module 'notistack' {
   interface VariantOverrides {
@@ -18,17 +15,14 @@ declare module 'notistack' {
   }
 }
 
-interface SnackNotificationProps extends NotificationProps {
+interface SnackNotificationProps extends Omit<NotificationProps, 'variant'> {
   noClose?: boolean;
   alertProps?: AlertProps;
+  message?: string;
+  variant?: 'success' | 'error' | 'warning' | 'info';
 }
 
-//
-
-export const SnackNotification = React.forwardRef<
-  HTMLDivElement,
-  SnackNotificationProps & CustomContentProps
->(
+export const SnackNotification = React.forwardRef<HTMLDivElement, SnackNotificationProps>(
   (
     {heading, headingProps, message, messages, messagesProps, noClose, alertProps, ...props},
     ref,
